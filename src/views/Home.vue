@@ -1,18 +1,68 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <el-container>
+    <el-header style="padding:0px;">
+      <HeaderComp />
+    </el-header>
+    <el-container>
+      <el-aside
+        style="overflow-x: hidden;"
+        :width="isCollapse ? '64px' : '200px'"
+      >
+        <SildeNav v-on:changeSilder="silderHandler" />
+      </el-aside>
+      <el-main>
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+import HeaderComp from "../components/Header";
+import SildeNav from "../components/SildeMenu";
+import { mapActions } from "vuex";
 export default {
   name: "Home",
-  components: {
-    HelloWorld
-  }
+  data() {
+    return {
+      isCollapse: true,
+    };
+  },
+  components: { HeaderComp, SildeNav },
+  methods: {
+    ...mapActions(["actionUserInfo"]),
+    silderHandler(state) {
+      this.isCollapse = state;
+    },
+  },
+  async created() {
+    let res = await this.axios.post("/lv1/searchuser", {
+      _id: window.localStorage.getItem("_id"),
+    });
+    if (res.status === 200) {
+      let { data } = res.data;
+      this.actionUserInfo(data);
+    } else {
+      this.$notify.info({
+        title: res.statusText,
+        message: res.data.msg,
+      });
+    }
+  },
 };
 </script>
+
+<style lang="less" scoped>
+.el-header {
+  height: auto !important;
+}
+.el-container {
+  height: 100%;
+}
+.el-aside {
+  background-color: #707b86;
+  transition: width 0.1s ease-in-out 0s;
+}
+</style>
