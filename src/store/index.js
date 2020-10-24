@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
+import module_net_list from "./moduleNet";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -17,5 +17,8 @@ export default new Vuex.Store({
       commit("mutateUserInfo", params);
     },
   },
-  modules: {},
+  getters: {},
+  modules: {
+    module_net_list,
+  },
 });

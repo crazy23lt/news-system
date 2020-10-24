@@ -6,6 +6,7 @@ import Qs from "qs";
 import Nprogress from "nprogress";
 import "nprogress/nprogress.css";
 import { Notification } from "element-ui";
+import { Loading } from "element-ui";
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
@@ -20,11 +21,16 @@ let config = {
     "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
   },
 };
-
+let loadingInstance = null;
 const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
   function(config) {
+    loadingInstance = Loading.service({
+      fullscreen: true,
+      background: "rgba(0, 0, 0, 0.3)",
+      text: "Loading",
+    });
     Nprogress.start();
     config.data = Qs.stringify(config.data);
     // Do something before request is sent
@@ -45,10 +51,12 @@ _axios.interceptors.response.use(
   function(response) {
     // Do something with response data
     // 关闭进度条
+    loadingInstance.close();
     Nprogress.done();
     return response;
   },
   function(error) {
+    loadingInstance.close();
     Nprogress.done();
     // Do something with response error
     const { status } = error.response;

@@ -30,10 +30,12 @@ import {
   Message,
   Radio,
   Notification,
+  Loading,
 } from "element-ui";
 Vue.component(Message);
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
+Vue.prototype.$loading = Loading.service;
 Vue.use(Radio);
 Vue.use(Link);
 Vue.use(Pagination);

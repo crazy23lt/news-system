@@ -3,7 +3,7 @@
     <el-header style="padding:0px;">
       <HeaderComp />
     </el-header>
-    <el-container>
+    <el-container class="container">
       <el-aside
         style="overflow-x: hidden;"
         :width="isCollapse ? '64px' : '200px'"
@@ -56,10 +56,13 @@ export default {
 
 <style lang="less" scoped>
 .el-header {
-  height: auto !important;
+  height: 10%;
 }
 .el-container {
   height: 100%;
+}
+.container {
+  height: 90%;
 }
 .el-aside {
   background-color: #707b86;

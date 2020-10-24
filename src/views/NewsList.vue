@@ -4,29 +4,30 @@
       <el-table-column type="index" width="50"> </el-table-column>
       <el-table-column
         sortable
-        prop="date"
         label="日期"
-        width="180"
-        align="center"
+        width="120"
+        align="left"
         :filters="fliterDate"
         :filter-method="filterHandlerDate"
       >
+        <template slot-scope="scope">
+          <el-tag effect="plain">
+            {{ scope.row.time | dateFormat(true) }}
+          </el-tag>
+        </template>
       </el-table-column>
       <el-table-column prop="title" label="标题" width="auto" align="left">
       </el-table-column>
       <el-table-column
         label="来源"
-        width="180"
-        align="center"
-        fixed="right"
+        width="200"
+        align="left"
         :filters="fliterSource"
         :filter-method="filterHandlerSource"
       >
         <template slot-scope="scope">
           <el-link :href="scope.row.url" :underline="false" target="_blank">
-            <el-tag effect="dark" icon="el-icon-paperclip">{{
-              scope.row.source
-            }}</el-tag>
+            {{ scope.row.source }}
           </el-link>
         </template>
       </el-table-column>
@@ -57,6 +58,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 export default {
   name: "newslist",
   data() {
@@ -65,91 +67,78 @@ export default {
         total: 100,
         pageSize: 20,
         pageSizes: [20, 50, 100],
-        currentPage: 1
+        currentPage: 1,
       },
-      tableData: [
-        {
-          date: "2019-12-12",
-          title: "「译」一个案例搞懂 Vue.js 的作用域插槽",
-          source: "思否",
-          url: "https://segmentfault.com/a/1190000020643548"
-        },
-        {
-          date: "2018-12-12",
-          title: "vue中provide和inject使用",
-          source: "思否",
-          url: "https://segmentfault.com/a/1190000021216039"
-        },
-        {
-          date: "2019-12-12",
-          title: "基于ElementUI封装一个表格组件 tableList",
-          source: "掘金",
-          url: "https://juejin.im/post/6844904201378594824"
-        },
-        {
-          date: "2020-12-12",
-          title: "封装element-ui表格，我是这样做的",
-          source: "知乎",
-          url: "https://zhuanlan.zhihu.com/p/163864433"
-        }
-      ]
+      tableData: [],
     };
   },
   methods: {
-    handleDelete(index, row) {
-      console.log(index, row);
-      let axiosState = false;
-      if (axiosState) {
-        this.$message({
-          message: "恭喜你，这是一条成功消息",
-          type: "success"
+    handleDelete: async function(index, row) {
+      let res = await this.axios.post("/lv1/delnews", { _id: row._id });
+      if (res.status === 200) {
+        this.tableData.splice(index, 1);
+        this.$notify.info({
+          title: res.statusText,
+          message: res.data.msg,
         });
       } else {
-        this.$message.error("错了哦，这是一条错误消息");
+        this.$notify.info({
+          title: res.statusText,
+          message: res.data.msg,
+        });
       }
     },
-    filterHandlerDate(value, row, column) {
-      const property = column["property"];
-      return row[property] === value;
+    filterHandlerDate(value, row) {
+      return Vue.filter("dateFormat")(row.time, true) === value;
     },
     filterHandlerSource(value, row) {
       return value === row.source;
     },
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+    handleSizeChange: async function(val) {
+      this.paginationOption.pageSize = val;
+      let { data } = await this.axios.post("/lv1/news", {
+        pagesize: this.paginationOption.pageSize,
+        pagenum: this.paginationOption.currentPage,
+      });
+      this.paginationOption.total = data.data.newsCount;
+      this.tableData = data.data.newsSize;
     },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-    }
+    handleCurrentChange: async function(val) {
+      this.paginationOption.currentPage = val;
+      let { data } = await this.axios.post("/lv1/news", {
+        pagesize: this.paginationOption.pageSize,
+        pagenum: this.paginationOption.currentPage,
+      });
+      this.paginationOption.total = data.data.newsCount;
+      this.tableData = data.data.newsSize;
+    },
   },
   computed: {
     fliterDate: function() {
-      let retArr = [];
-      let mapDate = new Map();
-      this.tableData.map(item => {
-        if (mapDate.has(item.date)) {
-          mapDate.set(item.date, false);
-        } else {
-          mapDate.set(item.date, true);
-          retArr.push({ text: item.date, value: item.date });
-        }
+      let mapcache = new Map();
+      this.tableData.map((item) => {
+        let t = Vue.filter("dateFormat")(item.time, true);
+        if (!mapcache.has(t)) mapcache.set(t, { text: t, value: t });
       });
-      return retArr;
+      return [...mapcache.values()];
     },
     fliterSource: function() {
-      let retArr = [];
-      let mapsource = new Map();
-      this.tableData.map(item => {
-        if (mapsource.has(item.source)) {
-          mapsource.set(item.source, false);
-        } else {
-          mapsource.set(item.source, true);
-          retArr.push({ text: item.source, value: item.source });
-        }
+      let mapcache = new Map();
+      this.tableData.map((item) => {
+        if (!mapcache.has(item.source))
+          mapcache.set(item.source, { text: item.source, value: item.source });
       });
-      return retArr;
-    }
-  }
+      return [...mapcache.values()];
+    },
+  },
+  async created() {
+    let { data } = await this.axios.post("/lv1/news", {
+      pagesize: this.paginationOption.pageSize,
+      pagenum: this.paginationOption.currentPage,
+    });
+    this.paginationOption.total = data.data.newsCount;
+    this.tableData = data.data.newsSize;
+  },
 };
 </script>
 

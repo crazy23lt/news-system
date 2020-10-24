@@ -6,12 +6,13 @@
 
 <script>
 export default {
-  name: "headerCmp"
+  name: "headerCmp",
 };
 </script>
 
 <style lang="less" scoped>
 .title {
+  height: 100%;
   width: 100%;
   color: white;
   background-color: black;

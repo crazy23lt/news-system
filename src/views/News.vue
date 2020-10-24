@@ -44,11 +44,19 @@ export default {
   methods: {
     spiderStart() {
       this.dialogVisible = false;
-      console.info("请求启动爬虫接口");
+      this.spiderBegin();
+      this.getnews();
     },
     getnews: async function() {
-      let res = await this.axios.post(`/lv1/todaynews`);
-      console.info(res);
+      let { data } = await this.axios.post(`/lv1/todaynews`);
+      this.newsCount = data.data;
+    },
+    spiderBegin: async function() {
+      let res = await this.axios.post(`/lv1/spider`);
+      this.$notify.info({
+        title: res.statusText,
+        message: res.data.msg,
+      });
     },
   },
   async created() {

@@ -7,10 +7,12 @@ import "./plugins/element.js";
 import "./assets/normalize.css";
 import "./assets/reset.less";
 import "./assets/theme.less";
+import "./utils/format";
+console.info(store);
 Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount("#app");
