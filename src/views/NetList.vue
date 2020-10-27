@@ -29,9 +29,7 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
-
-const { mapGetters, mapActions } = createNamespacedHelpers("module_net_list");
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "netlist",

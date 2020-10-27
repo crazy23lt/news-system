@@ -53,42 +53,42 @@ export default {
           label: "NBA体育",
           children: [
             {
-              label: "新浪体育"
+              label: "新浪体育",
             },
             {
-              label: "腾讯体育"
-            }
-          ]
+              label: "腾讯体育",
+            },
+          ],
         },
         {
           label: "金融理财",
           children: [
             {
-              label: "深圳理财"
+              label: "深圳理财",
             },
             {
-              label: "上海理财"
-            }
-          ]
+              label: "上海理财",
+            },
+          ],
         },
         {
           label: "国际新闻",
           children: [
             {
-              label: "早间新闻"
+              label: "早间新闻",
             },
             {
-              label: "午间新闻"
+              label: "午间新闻",
             },
             {
-              label: "晚间新闻"
-            }
-          ]
-        }
+              label: "晚间新闻",
+            },
+          ],
+        },
       ],
       defaultProps: {
         children: "children",
-        label: "label"
+        label: "label",
       },
       value: 10,
       marks: {
@@ -99,13 +99,13 @@ export default {
         10: "10h",
         12: "12h",
         16: "16h",
-        24: "24h"
-      }
+        24: "24h",
+      },
     };
   },
   methods: {
-    handleNodeCheck: debounce(function(data) {
-      console.log(data);
+    handleNodeCheck: debounce(function() {
+      // console.log(data);
       // 请求服务端设置 爬虫时间间隔的接口
       let axiosState = true;
       if (axiosState) {
@@ -114,8 +114,8 @@ export default {
         this.$message.error("设置爬取媒体失败！");
       }
     }, 3000),
-    changeSpiderTime: debounce(function(value) {
-      console.info(value);
+    changeSpiderTime: debounce(function() {
+      // console.info(value);
       // 请求服务端设置 爬虫时间间隔的接口
       let axiosState = true;
       if (axiosState) {
@@ -123,8 +123,8 @@ export default {
       } else {
         this.$message.error("设置时间间隔失败！");
       }
-    }, 1000)
-  }
+    }, 1000),
+  },
 };
 </script>
 

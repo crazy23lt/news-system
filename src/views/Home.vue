@@ -11,6 +11,7 @@
         <SildeNav v-on:changeSilder="silderHandler" />
       </el-aside>
       <el-main>
+        <ExTag />
         <keep-alive>
           <router-view></router-view>
         </keep-alive>
@@ -22,6 +23,7 @@
 <script>
 import HeaderComp from "../components/Header";
 import SildeNav from "../components/SildeMenu";
+import ExTag from "../components/ExTag";
 import { mapActions } from "vuex";
 export default {
   name: "Home",
@@ -30,7 +32,7 @@ export default {
       isCollapse: true,
     };
   },
-  components: { HeaderComp, SildeNav },
+  components: { HeaderComp, SildeNav, ExTag },
   methods: {
     ...mapActions(["actionUserInfo"]),
     silderHandler(state) {
@@ -64,8 +66,13 @@ export default {
 .container {
   height: 90%;
 }
+.el-main {
+  padding-top: 0;
+}
 .el-aside {
   background-color: #707b86;
-  transition: width 0.1s ease-in-out 0s;
+  -webkit-transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
+  background-color: rgb(84, 92, 100);
 }
 </style>
