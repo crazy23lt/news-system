@@ -19,21 +19,29 @@
       :collapse-transition="true"
       :router="true"
     >
-      <el-submenu index="/">
+      <el-menu-item index="/home">
+        <i class="el-icon-s-home"></i>
+        <span slot="title">系统主页</span>
+      </el-menu-item>
+      <el-submenu index="/news">
         <template slot="title">
-          <i class="el-icon-location"></i>
-          <span slot="title">新闻</span>
+          <i class="el-icon-menu"></i>
+          <span slot="title">新闻设置</span>
         </template>
         <el-menu-item index="/netlist">媒体列表</el-menu-item>
         <el-menu-item index="/newslist">新闻列表</el-menu-item>
       </el-submenu>
       <el-menu-item index="/spider">
-        <i class="el-icon-menu"></i>
-        <span slot="title">设置</span>
+        <i class="el-icon-help"></i>
+        <span slot="title">爬虫设置</span>
+      </el-menu-item>
+      <el-menu-item index="/todo">
+        <i class="el-icon-s-check"></i>
+        <span slot="title">Todo应用</span>
       </el-menu-item>
       <el-menu-item index="/user">
-        <i class="el-icon-setting"></i>
-        <span slot="title">管理</span>
+        <i class="el-icon-user"></i>
+        <span slot="title">用户管理</span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -44,7 +52,7 @@ export default {
   name: "sildeNav",
   data() {
     return {
-      isCollapse: true
+      isCollapse: true,
     };
   },
   methods: {
@@ -57,8 +65,8 @@ export default {
     showSildeNav() {
       this.isCollapse = !this.isCollapse;
       this.$emit("changeSilder", this.isCollapse);
-    }
-  }
+    },
+  },
 };
 </script>
 

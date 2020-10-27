@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/news",
+    redirect: "/home",
     name: "Home",
     component: () => import("../views/Home.vue"),
     beforeEnter: (to, from, next) => {
@@ -29,6 +29,11 @@ const routes = [
       // 当 /user/:id 匹配成功，
       // UserHome 会被渲染在 User 的 <router-view> 中
       {
+        path: "/home",
+        component: () => import("../views/Mine.vue"),
+        meta: { title: "系统主页" },
+      },
+      {
         path: "/news",
         redirect: "/newslist",
         component: () => import("../views/News.vue"),
@@ -36,15 +41,30 @@ const routes = [
           {
             path: "/newslist",
             component: () => import("../views/NewsList.vue"),
+            meta: { title: "新闻管理" },
           },
           {
             path: "/netlist",
             component: () => import("../views/NetList.vue"),
+            meta: { title: "媒体管理" },
           },
         ],
       },
-      { path: "/spider", component: () => import("../views/Spider.vue") },
-      { path: "/user", component: () => import("../views/User.vue") },
+      {
+        path: "/spider",
+        component: () => import("../views/Spider.vue"),
+        meta: { title: "爬虫管理" },
+      },
+      {
+        path: "/todo",
+        component: () => import("../views/Todo.vue"),
+        meta: { title: "Todo应用" },
+      },
+      {
+        path: "/user",
+        component: () => import("../views/User.vue"),
+        meta: { title: "用户管理" },
+      },
 
       // ...其他子路由
     ],

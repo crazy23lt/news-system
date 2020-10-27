@@ -31,11 +31,21 @@ import {
   Radio,
   Notification,
   Loading,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  Tabs,
+  TabPane,
 } from "element-ui";
 Vue.component(Message);
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 Vue.prototype.$loading = Loading.service;
+Vue.use(Tabs);
+Vue.use(TabPane);
+Vue.use(Dropdown);
+Vue.use(DropdownItem);
+Vue.use(DropdownMenu);
 Vue.use(Radio);
 Vue.use(Link);
 Vue.use(Pagination);

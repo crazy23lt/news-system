@@ -1,5 +1,6 @@
 import Vue from "vue";
 import "./plugins/axios";
+import "./plugins/echarts";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -8,7 +9,6 @@ import "./assets/normalize.css";
 import "./assets/reset.less";
 import "./assets/theme.less";
 import "./utils/format";
-console.info(store);
 Vue.config.productionTip = false;
 
 new Vue({
