@@ -4,10 +4,7 @@
       <HeaderComp />
     </el-header>
     <el-container class="container">
-      <el-aside
-        style="overflow-x: hidden;"
-        :width="isCollapse ? '64px' : '200px'"
-      >
+      <el-aside style="overflow-x: hidden;">
         <SildeNav v-on:changeSilder="silderHandler" />
       </el-aside>
       <el-main>
@@ -70,9 +67,8 @@ export default {
   padding-top: 0;
 }
 .el-aside {
-  background-color: #707b86;
-  -webkit-transition: width 0.3s ease-in-out;
-  transition: width 0.3s ease-in-out;
+  min-width: 64px;
+  width: auto !important;
   background-color: rgb(84, 92, 100);
 }
 </style>

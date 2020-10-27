@@ -1,5 +1,5 @@
 <template>
-  <div :class="isCollapse ? 'close' : 'open'">
+  <div :class="[isCollapse ? 'close' : 'open', 'wrapper']">
     <el-button
       :class="isCollapse ? 'close' : 'open'"
       type="primary"
@@ -16,7 +16,7 @@
       background-color="#545c64"
       text-color="white"
       active-text-color="#ffd04b"
-      :collapse-transition="true"
+      :collapse-transition="false"
       :router="true"
     >
       <el-menu-item index="/home">
@@ -71,6 +71,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.wrapper {
+  transition: width 0.3s;
+}
 .close {
   width: 64px;
 }
@@ -79,6 +82,9 @@ export default {
 }
 .el-menu {
   border: none !important;
+  .el-menu-item {
+    transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+  }
 }
 .icon {
   font-size: 20px;
