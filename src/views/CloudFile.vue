@@ -41,6 +41,7 @@ export default {
     tree: function() {
       const retTree = [];
       // root
+      this.fn1(this.dirs);
       let root = this.dirs.filter((item) => item.class === 0);
       root.forEach((item) => {
         retTree.push({
@@ -59,12 +60,22 @@ export default {
       console.info(tree);
     },
     renderContent() {},
-    fn1: (dirs, cls = 0, ret = {}) => {
+    fn1: (dirs, cls = 0, ret = [], max = 0) => {
       dirs.forEach((item) => {
+        if (cls === 0 && max < item.class) max = item.class;
         if (item.class === cls) {
-            
+          ret.push({
+            children: [],
+            label: item.name,
+            id: `${item.class}-${item.id}`,
+          });
         }
       });
+      if (cls === max) {
+        return ret;
+      } else {
+        return this.fn1(dirs, cls++, ret);
+      }
     },
   },
 };
