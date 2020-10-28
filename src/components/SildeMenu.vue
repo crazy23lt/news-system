@@ -43,6 +43,32 @@
         <i class="el-icon-user"></i>
         <span slot="title">用户管理</span>
       </el-menu-item>
+      <el-menu-item index="/font">
+        <i>
+          <font-awesome-icon class="el-icon-my" :icon="['fas', 'icons']" />
+        </i>
+        <span slot="title">图标设置</span>
+      </el-menu-item>
+      <el-submenu index="/form">
+        <template slot="title">
+          <i>
+            <!-- <i class="fab fa-wpforms"></i> -->
+            <font-awesome-icon class="el-icon-my" :icon="['fab', 'wpforms']" />
+          </i>
+          <span slot="title">form表单</span>
+        </template>
+        <el-menu-item index="/baseform">基本表单</el-menu-item>
+        <el-menu-item index="/upload">文件上传</el-menu-item>
+      </el-submenu>
+      <el-menu-item index="/cloud">
+        <i>
+          <font-awesome-icon
+            class="el-icon-my"
+            :icon="['fas', 'cloud-upload-alt']"
+          />
+        </i>
+        <span slot="title">图标设置</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>

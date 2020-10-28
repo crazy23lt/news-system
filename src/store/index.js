@@ -1,7 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 // import module_net_list from "./moduleNet";
-import todo from "./todo"
+import todo from "./todo";
+import cloud from "./cloud";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -37,6 +38,7 @@ export default new Vuex.Store({
   },
   modules: {
     // module_net_list,
-    todo
+    todo,
+    cloud,
   },
 });

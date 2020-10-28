@@ -5,6 +5,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "./plugins/element.js";
+import "./plugins/fontawesome.js";
 import "./assets/normalize.css";
 import "./assets/reset.less";
 import "./assets/theme.less";

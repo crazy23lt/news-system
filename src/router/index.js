@@ -65,6 +65,33 @@ const routes = [
         component: () => import("../views/User.vue"),
         meta: { title: "用户管理" },
       },
+      {
+        path: "/font",
+        component: () => import("../views/FormawesomeInVue.vue"),
+        meta: { title: "图标设置" },
+      },
+      {
+        path: "/cloud",
+        component: () => import("../views/CloudFile.vue"),
+        meta: { title: "系统云盘" },
+      },
+      {
+        path: "/form",
+        redirect: "/baseform",
+        component: () => import("../views/Form.vue"),
+        children: [
+          {
+            path: "/baseform",
+            component: () => import("../views/BaseForm.vue"),
+            meta: { title: "基本form表单" },
+          },
+          {
+            path: "/upload",
+            component: () => import("../views/UploadForm.vue"),
+            meta: { title: "文件图片上传" },
+          },
+        ],
+      },
 
       // ...其他子路由
     ],

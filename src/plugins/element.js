@@ -36,11 +36,17 @@ import {
   DropdownMenu,
   Tabs,
   TabPane,
+  Timeline,
+  TimelineItem,
+  Upload,
 } from "element-ui";
 Vue.component(Message);
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 Vue.prototype.$loading = Loading.service;
+Vue.use(Upload);
+Vue.use(Timeline);
+Vue.use(TimelineItem);
 Vue.use(Tabs);
 Vue.use(TabPane);
 Vue.use(Dropdown);
