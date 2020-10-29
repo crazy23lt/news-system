@@ -40,8 +40,7 @@ export default {
     ...mapState(["dirs"]),
     tree: function() {
       const retTree = [];
-      // root
-      this.fn1(this.dirs);
+      console.info(this.fn1(this.dirs));
       let root = this.dirs.filter((item) => item.class === 0);
       root.forEach((item) => {
         retTree.push({
@@ -60,10 +59,20 @@ export default {
       console.info(tree);
     },
     renderContent() {},
-    fn1: (dirs, cls = 0, ret = [], max = 0) => {
+    fn1: function(dirs, cls = 0, ret = [], max = 0) {
       dirs.forEach((item) => {
         if (cls === 0 && max < item.class) max = item.class;
-        if (item.class === cls) {
+        if (item.class === cls && item.up_id !== null) {
+          ret.forEach((item_c) => {
+            if (item_c.id === item.up_id) {
+              item_c.children.push({
+                children: [],
+                label: item.name,
+                id: `${item.class}-${item.id}`,
+              });
+            }
+          });
+        } else {
           ret.push({
             children: [],
             label: item.name,
@@ -71,10 +80,11 @@ export default {
           });
         }
       });
+      console.info(cls);
       if (cls === max) {
         return ret;
       } else {
-        return this.fn1(dirs, cls++, ret);
+        return this.fn1(dirs, ++cls, ret, max);
       }
     },
   },
